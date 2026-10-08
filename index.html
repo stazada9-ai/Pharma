@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Al-Shifa Pharmacy ERP</title>
+<link rel="icon" type="image/png" href="logo.png" />
+<link rel="apple-touch-icon" href="logo.png" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+<!-- ============ SMART CODE PROTECTION ============ -->
+<script>
+(function(){
+  'use strict';
+
+  // ═══ CONFIG ═══
+  var SECRET_KEY = 'alshifa2026';        // 🔑 Apna secret badal lo
+  var BYPASS_PARAM = 'dev';              // URL mein ?dev=alshifa2026 lagao
+  var OWNER_EMAIL = 'stazada9@gmail.com'; // Yeh owner ko bypass dega
+
+  // ═══ Check Bypass ═══
+  function isBypassed(){
+    // 1. URL parameter check: ?dev=alshifa2026
+    try {
+      var params = new URLSearchParams(window.location.search);
+      if(params.get(BYPASS_PARAM) === SECRET_KEY) {
+        sessionStorage.setItem('_ak', '1'); // session mein yaad rakho
+        return true;
+      }
+    } catch(e){}
+
+    // 2. Session mein already bypassed?
+    if(sessionStorage.getItem('_ak') === '1') return true;
+
+    // 3. Owner logged in?
+    try {
+      var session = JSON.parse(localStorage.getItem('alshifa_session') || '{}');
+      if(session && session.user && session.user.email === OWNER_EMAIL) return true;
+    } catch(e){}
+
+    // 4. Secret key combo: Ctrl + Alt + K (yeh khud bypass karta hai)
+    return false;
+  }
+
+  // ═══ Secret Key Combo: Ctrl + Alt + K ═══
+  document.addEventListener('keydown', function(e){
+    if(e.ctrlKey && e.altKey && (e.key === 'K' || e.key === 'k')){
+      e.preventDefault();
+      sessionStorage.setItem('_ak', '1');
+      console.log('%c🔓 Debug mode enabled for this session', 'color:#10b981;font-weight:bold;font-size:14px;');
+      console.log('%cReload page to access all dev tools', 'color:#94a3b8;font-size:12px;');
+      // Optional: show notification
+      if(typeof window.toast === 'function'){
+        window.toast('🔓 Debug mode enabled — reload for full access');
+      }
+    }
+  });
+
+  // ═══ Check bypass on load ═══
+  if(isBypassed()){
+    // Fully bypassed — no protection
+    console.log('%c✓ Debug mode active (owner/dev)', 'color:#10b981;font-weight:bold;');
+    return;
+  }
+
+  // ═══ Protection active ═══
+  console.log('%c🛡️ Al-Shifa Pharmacy ERP', 'font-size:16px;font-weight:bold;color:#047857;');
+  console.log('%c© S_T_T_A_Software-Agency', 'font-size:12px;color:#64748b;');
+
+  // Block right-click (except inputs)
+  document.addEventListener('contextmenu', function(e){
+    var tag = (e.target.tagName || '').toLowerCase();
+    if(tag === 'input' || tag === 'textarea') return;
+    e.preventDefault();
+    return false;
+  });
+
+  // Block dev tools keys
+  document.addEventListener('keydown', function(e){
+    // F12
+    if(e.key === 'F12' || e.keyCode === 123){
+      e.preventDefault(); e.stopPropagation();
+      return false;
+    }
+    // Ctrl + Shift + I / J / C
+    if(e.ctrlKey && e.shiftKey){
+      var k = (e.key || '').toUpperCase();
+      if(k === 'I' || k === 'J' || k === 'C'){
+        e.preventDefault(); e.stopPropagation();
+        return false;
+      }
+    }
+    // Ctrl + U (view source)
+    if(e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.keyCode === 85)){
+      e.preventDefault(); e.stopPropagation();
+      return false;
+    }
+    // Ctrl + S (save page)
+    if(e.ctrlKey && (e.key === 's' || e.key === 'S' || e.keyCode === 83)){
+      e.preventDefault(); e.stopPropagation();
+      return false;
+    }
+  }, true);
+
+  // Block image drag
+  document.addEventListener('dragstart', function(e){
+    if(e.target.tagName === 'IMG'){ e.preventDefault(); return false; }
+  });
+
+  // Block text selection on sensitive elements (optional)
+  document.addEventListener('selectstart', function(e){
+    var tag = (e.target.tagName || '').toLowerCase();
+    if(tag === 'input' || tag === 'textarea') return;
+    var cls = (e.target.className || '').toString();
+    if(cls.indexOf('no-select') >= 0) e.preventDefault();
+  });
+
+})();
+</script>
+<!-- ============ END SMART PROTECTION ============ -->
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen" class="login-screen">
+  <button type="button" class="theme-toggle theme-toggle-login" id="theme-toggle-login" title="Dark / Light mode">
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+
+  <div class="login-card">
+    <img src="logo.png" alt="Al-Shifa" class="login-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"/>
+    <div class="login-logo-fallback" style="display:none;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 2v20M2 12h20"/></svg>
+    </div>
+    <h1>Al-Shifa Pharmacy</h1>
+    <p class="tagline">Better Health · Brighter Future</p>
+
+    <div class="field">
+      <label>Username</label>
+      <div class="input-wrap">
+        <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <input id="login-user" type="text" placeholder="username" autocomplete="username" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Password</label>
+      <div class="input-wrap">
+        <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <input id="login-pass" type="password" placeholder="password" autocomplete="current-password" />
+        <button type="button" id="toggle-pass" class="eye-btn" tabindex="-1">
+          <svg id="eye-show" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          <svg id="eye-hide" style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="login-err" id="login-err"></div>
+    <button type="button" class="btn-login" id="login-btn">Sign In</button>
+    <button type="button" class="btn-forgot" id="forgot-btn">Forgot Password?</button>
+
+    <!-- ═══ NEW: Customer Place Order Button ═══ -->
+    <div style="margin-top:18px;padding-top:16px;border-top:1px dashed var(--line);">
+      <div style="font-size:11px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;font-weight:700;letter-spacing:.5px;">Customer hai? Yahan se order karein</div>
+      <button type="button" class="btn-login" id="public-place-order-btn" style="background:linear-gradient(135deg,#0284c7,#38bdf8);box-shadow:0 6px 20px rgba(2,132,199,.35);">
+        🛒 Place Order (No Login)
+      </button>
+    </div>
+
+    <div class="footer-note">Making By:(S_T_T_A_Software-Agency)</div>
+    <div id="cloud-status-login" style="margin-top:8px;font-size:11px;color:var(--muted);"></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app" class="app" style="display:none">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <img src="logo.png" alt="" class="brand-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"/>
+      <div class="logo-sm" style="display:none;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M2 12h20"/></svg></div>
+      <div><h2 id="brand-name">Al-Shifa Pharmacy</h2><p id="brand-sub">Islamabad</p></div>
+    </div>
+    <nav class="nav" id="nav">
+      <button class="nav-btn active" data-nav="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Dashboard</button>
+      <button class="nav-btn" data-nav="counter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>Counter</button>
+      <button class="nav-btn" data-nav="wholesale"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg>Wholesale</button>
+      <button class="nav-btn" data-nav="inventory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>Inventory</button>
+      <button class="nav-btn" data-nav="purchases"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>Purchases</button>
+      <button class="nav-btn" data-nav="purchaseorders"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>Purchase Orders</button>
+      <button class="nav-btn" data-nav="customerorders"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>Customer Orders</button>
+      <button class="nav-btn" data-nav="returns"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 14 4 9 9 4"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/></svg>Returns</button>
+      <button class="nav-btn" data-nav="customers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>Customers</button>
+      <button class="nav-btn" data-nav="suppliers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg>Suppliers</button>
+      <button class="nav-btn" data-nav="sales"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Sales</button>
+      <button class="nav-btn" data-nav="reports"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>Reports</button>
+      <button class="nav-btn" data-nav="expiry"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Expiry</button>
+      <button class="nav-btn" data-nav="reorder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3z"/><path d="M3 9h18M9 21V9"/></svg>Reorder</button>
+      <button class="nav-btn" data-nav="audit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Audit</button>
+      <button class="nav-btn" data-nav="dayclose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Day Close</button>
+      <button class="nav-btn" data-nav="staff"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Staff</button>
+      <button class="nav-btn" data-nav="presets"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Quick Packs</button>
+      <button class="nav-btn" data-nav="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</button>
+    </nav>
+    <div class="user-box">
+      <div><div class="user-name" id="user-name">Administrator</div><div class="user-role" id="user-role">Owner</div></div>
+      <button id="logout-btn" class="logout" title="Logout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <button id="menu-toggle" class="menu-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+      <div class="titles"><h2 id="top-store">Al-Shifa Pharmacy</h2><small id="page-title">Dashboard</small></div>
+      <span class="spacer"></span>
+      <span id="cloud-status" class="date-badge" style="cursor:pointer;" title="Cloud sync status"></span>
+      <span class="date-badge" id="today-badge"></span>
+      <button type="button" class="theme-toggle" id="theme-toggle" title="Dark / Light mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </header>
+    <section class="view" id="view"></section>
+  </main>
+</div>
+
+<!-- ═══════════ CUSTOMER ORDER PORTAL (Public) ═══════════ -->
+<div id="customer-portal" class="customer-portal" style="display:none;">
+  <div class="cp-header">
+    <div class="cp-brand">
+      <img src="logo.png" alt="" class="cp-logo" onerror="this.style.display='none'"/>
+      <div>
+        <h1 id="cp-store-name">Al-Shifa Pharmacy</h1>
+        <p>Apna order yahan place karein</p>
+      </div>
+    </div>
+    <button type="button" class="cp-close" id="cp-close-btn" title="Close">✕</button>
+  </div>
+
+  <div class="cp-body">
+    <div class="cp-catalog-wrap">
+      <div class="cp-search-wrap">
+        <input type="text" id="cp-search" placeholder="🔍 Medicine dhoondein..."/>
+      </div>
+      <div class="cp-categories" id="cp-categories"></div>
+      <div class="cp-products" id="cp-products"></div>
+    </div>
+
+    <div class="cp-cart-wrap">
+      <div class="cp-cart-head">
+        <h3>🛒 Aap ka Order</h3>
+        <span id="cp-cart-count" class="cp-badge">0 items</span>
+      </div>
+
+      <div class="cp-cart-items" id="cp-cart-items">
+        <div class="cp-empty">Abhi cart khali hai</div>
+      </div>
+
+      <div class="cp-totals" id="cp-totals"></div>
+
+      <div class="cp-form">
+        <div class="cp-field">
+          <label>Aap ka naam *</label>
+          <input type="text" id="cp-name" placeholder="e.g. Ahmed Khan"/>
+        </div>
+        <div class="cp-field">
+          <label>Phone / WhatsApp *</label>
+          <input type="tel" id="cp-phone" placeholder="0300-1234567"/>
+        </div>
+        <div class="cp-field">
+          <label>Delivery Address *</label>
+          <textarea id="cp-address" rows="2" placeholder="House #, Street, Area, City"></textarea>
+        </div>
+        <div class="cp-field">
+          <label>Notes (optional)</label>
+          <input type="text" id="cp-notes" placeholder="Koi khaas hidaayat? (e.g. jaldi chahiye)"/>
+        </div>
+
+        <button type="button" class="cp-submit" id="cp-submit">
+          📱 WhatsApp pe Order Bhejein
+        </button>
+
+        <div class="cp-note">
+          <b>Kaise kaam karta hai:</b> Order submit karne pe aap ki details pharmacy ko WhatsApp pe chali jayengi. Pharmacy aap se confirm karegi.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal-root"></div>
+<!-- ═══════════ OTP VERIFICATION MODAL ═══════════ -->
+<div id="otp-modal" class="otp-modal-bg" style="display:none;">
+  <div class="otp-modal-card">
+    <div class="otp-icon-wrap">
+      <div class="otp-icon" id="otp-icon">🔐</div>
+    </div>
+    <h2 class="otp-title" id="otp-title">Verification Code</h2>
+    <p class="otp-subtitle" id="otp-subtitle">Aap ke email pe 6-digit code bheja gaya hai</p>
+
+    <div class="otp-code-input-wrap">
+      <input type="text" id="otp-code-input" maxlength="6" inputmode="numeric" placeholder="000000" autocomplete="off" class="otp-code-input"/>
+    </div>
+
+    <div class="otp-error" id="otp-error"></div>
+
+    <div class="otp-timer-wrap">
+      <span class="otp-timer" id="otp-timer">05:00</span>
+      <button type="button" class="otp-resend" id="otp-resend" disabled>Resend Code</button>
+    </div>
+
+    <button type="button" class="otp-verify-btn" id="otp-verify-btn">✓ Verify & Login</button>
+    <button type="button" class="otp-cancel-btn" id="otp-cancel-btn">Cancel</button>
+
+    <div class="otp-footer" id="otp-footer-info"></div>
+  </div>
+</div>
+<div id="toast"></div>
+<div id="print-root"></div>
+
+<script type="module" src="firebase-init.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
